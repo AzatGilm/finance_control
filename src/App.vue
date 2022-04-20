@@ -2,9 +2,9 @@
   <div id="app">
     <header :class="[$style.header]">
       My personal cost
-      <a href="#dashboard"> Dashboard </a>
-      <a href="#about"> About </a>
-      <a href="#404"> 404 </a>
+      <a href="/dashboard"> Dashboard </a>
+      <a href="/about"> About </a>
+      <a href="/404"> 404 </a>
     </header>
     <PageDashboard v-if="page==='dashboard'" />
     <PageAbout v-if="page==='about'" />
@@ -31,15 +31,22 @@ export default {
   },
   methods: {
     setPage () {
-      this.page = location.hash.slice(1)
+      this.page = location.pathname.slice(1)
     }
   },
   mounted () {
     this.setPage()
-    window.addEventListener('hashchange',
-      () => {
-        this.page = location.hash.slice(1)
-      })
+    const links = document.querySelectorAll('a')
+    links.forEach(
+      (link) => {
+        link.addEventListener('click', (event) => {
+          event.preventDefault()
+          history.pushState({}, '', link.href)
+          this.setPage()
+        })
+      }
+    )
+    window.addEventListener('popstate', this.setPage)
   }
 }
 </script>
