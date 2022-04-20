@@ -1,19 +1,47 @@
 <template>
     <div>
-        <div v-for="(item, index) in items" :key="index">
+        <div v-for="(item, index) in currentElement"
+        :key="index">
             {{ item }}
         </div>
+        <PaginationVue
+        :length="getPaymentsList.length"
+        :n="n"
+        :cur="page"
+        @paginate="onPaginate"
+        />
     </div>
 </template>
 
 <script>
+import PaginationVue from './PaginationVue.vue'
+import { mapGetters } from 'vuex'
+
 export default {
-  props: {
-    items: Array
+  components: {
+    PaginationVue
+  },
+  data () {
+    return {
+      page: 1,
+      n: 10
+    }
   },
   methods: {
     doSomething () {
       console.log(this.items)
+    },
+    onPaginate (p) {
+      this.page = p
+    }
+  },
+  computed: {
+    ...mapGetters([
+      'getPaymentsList'
+    ]),
+    currentElement () {
+      const { page, n } = this
+      return this.getPaymentsList.slice(n * (page - 1), n * (page - 1) + n)
     }
   }
 }

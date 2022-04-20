@@ -3,9 +3,39 @@ import Vuex from 'vuex'
 
 Vue.use(Vuex)
 
-new Vue.store ({
-    state:{
-     paymentslist: [
-    ]}
+export default new Vuex.Store({
+  state: {
+    paymentslist: [
+    ]
+  },
+  mutations: {
+    setPaymentsListData (state, payload) {
+      state.paymentslist = payload
+    }
+  },
+  getters: {
+    getPaymentsList: (state) => state.paymentslist
+  },
+  actions: {
+    fetchData ({ commit }) {
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          const items = []
+          for (let i = 1; i < 105; i++) {
+            items.push({
+              date: '13.04.22',
+              category: 'Education',
+              price: i
+            })
+          }
+          resolve(items)
+        },
+        2000)
+      })
+        .then(res => {
+          commit('setPaymentsListData', res)
+        }
+        )
+    }
+  }
 })
-
