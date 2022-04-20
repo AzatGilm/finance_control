@@ -2,38 +2,44 @@
   <div id="app">
     <header :class="[$style.header]">
       My personal cost
+      <a href="#dashboard"> Dashboard </a>
+      <a href="#about"> About </a>
+      <a href="#404"> 404 </a>
     </header>
-    <PaymentForm />
-    <PaymentsList />
+    <PageDashboard v-if="page==='dashboard'" />
+    <PageAbout v-if="page==='about'" />
+    <PageError404 v-if="page==='404'" />
   </div>
 </template>
 
 <script>
-import PaymentsList from './components/PaymentsList.vue'
-import PaymentForm from './components/PaymentForm.vue'
-
-import { mapActions } from 'vuex'
+import PageDashboard from './page/PageDashboard.vue'
+import PageAbout from './page/PageAbout.vue'
+import PageError404 from './page/PageError404.vue'
 
 export default {
   name: 'App',
   components: {
-    PaymentsList,
-    PaymentForm
+    PageDashboard,
+    PageAbout,
+    PageError404
   },
   data () {
     return {
+      page: 'dashboard'
     }
   },
   methods: {
-    onDataAdded (data) {
-      this.paymentsList.push(data)
-    },
-    ...mapActions([
-      'fetchData'
-    ])
+    setPage () {
+      this.page = location.hash.slice(1)
+    }
   },
   mounted () {
-    this.fetchData()
+    this.setPage()
+    window.addEventListener('hashchange',
+      () => {
+        this.page = location.hash.slice(1)
+      })
   }
 }
 </script>
