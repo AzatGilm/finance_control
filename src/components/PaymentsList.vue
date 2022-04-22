@@ -43,6 +43,9 @@ export default {
       const { page, n } = this
       return this.getPaymentsList.slice(n * (page - 1), n * (page - 1) + n)
     }
+  },
+  mounted () {
+    +this.$route.params.page ? this.page = +this.$route.params.page : this.page = 1
   }
 }
 </script>
