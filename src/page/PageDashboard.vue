@@ -2,8 +2,6 @@
   <div>
       <!-- <PaymentForm/> -->
       <PaymentsList/>
-      <ModalVue v-if="modalFlag" modal="paymentform"/>
-      <button @click="openModal" > Open Modal Window </button>
   </div>
 </template>
 
@@ -12,13 +10,11 @@ import { mapActions } from 'vuex'
 
 // import PaymentForm from '../components/PaymentForm.vue'
 import PaymentsList from '../components/PaymentsList.vue'
-import ModalVue from '../components/modalwindow/ModalVue.vue'
 
 export default {
   components: {
     // PaymentForm,
-    PaymentsList,
-    ModalVue
+    PaymentsList
   },
   data () {
     return {

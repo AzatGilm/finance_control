@@ -10,6 +10,8 @@
         :cur="page"
         @paginate="onPaginate"
         />
+        <button v-on:click="shownPaymentListForm" > Show PaymentsList Form </button>
+        <button v-on:click="closePaymentForm" > Close PaymentsList Form </button>
     </div>
 </template>
 
@@ -28,11 +30,14 @@ export default {
     }
   },
   methods: {
-    doSomething () {
-      console.log(this.items)
-    },
     onPaginate (p) {
       this.page = p
+    },
+    shownPaymentListForm () {
+      this.$modal.show('PaymentForm')
+    },
+    closePaymentForm () {
+      this.$modal.close()
     }
   },
   computed: {
@@ -43,9 +48,6 @@ export default {
       const { page, n } = this
       return this.getPaymentsList.slice(n * (page - 1), n * (page - 1) + n)
     }
-  },
-  mounted () {
-    +this.$route.params.page ? this.page = +this.$route.params.page : this.page = 1
   }
 }
 </script>

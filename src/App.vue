@@ -9,14 +9,18 @@
     <main>
       <router-view/>
     </main>
+    <Modal/>
   </div>
 </template>
 
 <script>
+import Modal from './components/modalwindow/ModalVue.vue'
 
 export default {
   name: 'App',
-
+  components: {
+    Modal
+  },
   data () {
     return {
     }
