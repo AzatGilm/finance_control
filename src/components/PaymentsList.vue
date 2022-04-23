@@ -48,6 +48,11 @@ export default {
       const { page, n } = this
       return this.getPaymentsList.slice(n * (page - 1), n * (page - 1) + n)
     }
+  },
+  mounted () {
+    this.page = +this.$route.params.page
+    // this.$route.path === '/dashboard' ? this.page = 1 : this.page = +this.$route.params.page
+    // console.log(this.$route)
   }
 }
 </script>
