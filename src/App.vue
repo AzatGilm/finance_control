@@ -1,6 +1,9 @@
 <template>
   <div :class="[$style.app]">
-    <Modal v-if="modalShown" :name="modalShown" />
+    <transition name="fade">
+      <Modal v-if="modalShown" :name="modalShown" />
+    </transition>
+
     <header :class="[$style.header]">
       My personal cost
       <router-link to="/dashboard"> Dashboard </router-link>
@@ -14,7 +17,6 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
 
 export default {
   name: 'App',
@@ -27,9 +29,6 @@ export default {
     }
   },
   methods: {
-    ...mapActions([
-      'fetchData'
-    ]),
     onShown ({ name }) {
       this.modalShown = name
     },
@@ -40,7 +39,6 @@ export default {
   mounted () {
     // this.$router.push({ name: 'about' })
     // console.log(this.$router)
-    this.fetchData()
     this.$modal.EventBus.$on('show', this.onShown)
     this.$modal.EventBus.$on('close', this.onClose)
   },
@@ -61,5 +59,11 @@ export default {
     margin: 0;
     width: 100%;
     height: 100vh;
+  }
+  :global(.fade-enter-active),:global(.fade-leave-active) {
+    transition: 1s opacity linear;
+  }
+  :global(.fade-enter), :global(.fade-leave-to) {
+    opacity: 0;
   }
 </style>

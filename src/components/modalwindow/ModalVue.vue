@@ -1,8 +1,8 @@
 <template>
   <div :class="[$style.wrapper]">
       <div :class="[$style.overlay]"></div>
-      <div class="[$style.content]" >
-        <header>{{shown}}</header>
+      <div :class="[$style.content]" >
+        <header>{{name}}</header>
         <PaymentForm v-if=" name==='PaymentForm'" />
         <button v-on:click="onClose">Close</button>
       </div>
@@ -20,6 +20,9 @@ export default {
     name: String
   },
   methods: {
+    onClose () {
+      this.$modal.close()
+    }
   }
 }
 
@@ -33,6 +36,7 @@ export default {
       height: 100vh;
 
       .overlay {
+        z-index: 10;
         position: absolute;
         top: 0;
         right: 0;
@@ -41,6 +45,8 @@ export default {
         background: rgba(50, 50, 50, 0.5);
       }
       .content {
+        position: relative;
+        z-index: 100;
       }
   }
 

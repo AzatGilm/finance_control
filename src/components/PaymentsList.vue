@@ -5,7 +5,7 @@
             {{ item }}
         </div>
         <PaginationVue
-        :length="getPaymentsList.length"
+        :length="12"
         :n="n"
         :cur="page"
         @paginate="onPaginate"
@@ -17,7 +17,7 @@
 
 <script>
 import PaginationVue from './PaginationVue.vue'
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
   components: {
@@ -26,12 +26,16 @@ export default {
   data () {
     return {
       page: 1,
-      n: 10
+      n: 3
     }
   },
   methods: {
+    ...mapActions([
+      'fetchData'
+    ]),
     onPaginate (p) {
       this.page = p
+      this.fetchData(p)
     },
     shownPaymentListForm () {
       this.$modal.show('PaymentForm')
@@ -50,9 +54,9 @@ export default {
     }
   },
   mounted () {
+    this.fetchData(this.page)
     this.page = +this.$route.params.page
     // this.$route.path === '/dashboard' ? this.page = 1 : this.page = +this.$route.params.page
-    // console.log(this.$route)
   }
 }
 </script>
