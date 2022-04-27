@@ -1,51 +1,46 @@
 <template>
-  <div :class="[$style.app]">
-    <transition name="fade">
-      <Modal v-if="modalShown" :name="modalShown" />
-    </transition>
-
-    <header :class="[$style.header]">
-      My personal cost
-      <router-link to="/dashboard"> Dashboard </router-link>
-      <router-link to="/about"> About </router-link>
-      <router-link to="/404"> 404 </router-link>
-    </header>
-    <main>
+  <v-app>
+    <v-app-bar flat app>
+      <v-btn :ripple="false" plain to="/dashboard"> Dashboard </v-btn>
+      <v-btn :ripple="false" plain to="/about"> About </v-btn>
+      <v-btn :ripple="false" plain to="/404"> 404 </v-btn>
+    </v-app-bar>
+    <v-main>
       <router-view/>
-    </main>
-  </div>
+    </v-main>
+  </v-app>
 </template>
 
 <script>
 
 export default {
-  name: 'App',
-  components: {
-    Modal: () => import('./components/modalwindow/ModalVue.vue')
-  },
-  data () {
-    return {
-      modalShown: false
-    }
-  },
-  methods: {
-    onShown ({ name }) {
-      this.modalShown = name
-    },
-    onClose () {
-      this.modalShown = ''
-    }
-  },
-  mounted () {
-    // this.$router.push({ name: 'about' })
-    // console.log(this.$router)
-    this.$modal.EventBus.$on('show', this.onShown)
-    this.$modal.EventBus.$on('close', this.onClose)
-  },
-  beforeDestroy () {
-    this.$modal.EventBus.$off('show', this.onShown)
-    this.$modal.EventBus.$off('close', this.onClose)
-  }
+  name: 'App'
+  // components: {
+  //   Modal: () => import('./components/modalwindow/ModalVue.vue')
+  // },
+  // data () {
+  //   return {
+  //     modalShown: false
+  //   }
+  // },
+  // methods: {
+  //   onShown ({ name }) {
+  //     this.modalShown = name
+  //   },
+  //   onClose () {
+  //     this.modalShown = ''
+  //   }
+  // },
+  // mounted () {
+  //   // this.$router.push({ name: 'about' })
+  //   // console.log(this.$router)
+  //   this.$modal.EventBus.$on('show', this.onShown)
+  //   this.$modal.EventBus.$on('close', this.onClose)
+  // },
+  // beforeDestroy () {
+  //   this.$modal.EventBus.$off('show', this.onShown)
+  //   this.$modal.EventBus.$off('close', this.onClose)
+  // }
 }
 </script>
 

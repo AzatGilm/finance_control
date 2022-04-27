@@ -11,6 +11,11 @@ const router = new Router({
   mode: 'history',
   routes: [
     {
+      path: '',
+      name: 'dashboard',
+      component: () => import('../page/PageDashboard')
+    },
+    {
       path: '/dashboard',
       name: 'dashboard',
       component: () => import('../page/PageDashboard')
